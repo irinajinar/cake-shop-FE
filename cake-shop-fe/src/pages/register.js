@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Paper,
@@ -8,17 +8,43 @@ import {
   Button,
 } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import axios from 'axios';
+
+
+
 const Register = () => {
   const paperStyle = { padding: 20, width: 300, margin: "0 auto" };
   const headerStyle = { margin: 0 };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const marginTop = { marginTop: 5 };
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+    const [telephoneNumber, setTelephoneNumber] = useState("");
+    const [address, setAddress] = useState("");
+
+  const options = {
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  };
+  
+  const handleButtonClick = async () => {
+    axios.post('http://localhost:8081/register',  {
+      firstName: `${firstName}`,
+      lastName: `${lastName}`,
+      telephoneNumber: `${telephoneNumber}`,
+      address: `${address}`,
+      email: `${email}`,
+      password: `${password}`,
+      
+    },
+    options )
+    .then(response => console.log(response.data))
+  
+    .catch(error => console.log(error));
+  };
+
+
   return (
     <Grid>
       <Paper style={paperStyle}>
@@ -37,6 +63,11 @@ const Register = () => {
             fullWidth
             label="First name"
             placeholder="Enter your first name"
+            value={firstName}
+              onChange={(e) => {
+                setFirstName(e.target.value);
+                console.log(firstName);
+              }}
           />
           <TextField
             fullWidth
@@ -59,7 +90,12 @@ const Register = () => {
             placeholder="Enter your password"
           />
 
-          <Button type="submit" variant="contained" color="primary">
+          <Button onClick={handleButtonClick}
+            type="submit"
+            variant="contained"
+            color="primary"
+            
+          >
             Register
           </Button>
         </form>
