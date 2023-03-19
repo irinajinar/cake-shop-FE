@@ -32,7 +32,7 @@ const Login = ({ handleChange }) => {
     headers: { "Content-Type": "application/json; charset=utf-8" },
   };
   useEffect(() => {
-    if (localStorage.getItem("isLogged")) {
+    if (localStorage.getItem("isLogged")==="true") {
       navigate("/");
     }
   }, []);

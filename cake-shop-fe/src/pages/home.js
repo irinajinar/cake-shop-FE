@@ -21,7 +21,7 @@ function HomePage() {
   const classes = useStyles();
   const navigate = useNavigate();
   useEffect(() => {
-    if(localStorage.getItem('isLogged')===true){
+    if(localStorage.getItem('isLogged')==="true"){
       axios
       .get("http://localhost:8081/products")
       .then((response) => setProducts(response.data))
