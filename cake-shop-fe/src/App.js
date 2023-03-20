@@ -1,14 +1,14 @@
 import React from "react";
 import "./App.css";
 // import SignInOutContainer from "./containers";
-import HomePage from "./pages/Home";
+import HomePage from "./pages/home";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Card from "./Card";
 import AppBar from "./Appbar";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./pages/login";
+import Register from "./pages/register";
 
 const useStyles = makeStyles({
   gridContainer: {
