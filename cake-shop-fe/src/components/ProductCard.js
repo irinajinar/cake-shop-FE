@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import logo from "./logo.jpg";
+
 
 function ProductCard({ fieldId, image, name, productType, price, quantity }) {
   return (
@@ -15,7 +15,7 @@ function ProductCard({ fieldId, image, name, productType, price, quantity }) {
         }}
       >
         <ImageContainer>
-          <Card.Img variant="top" src={logo} alt="Logo" />
+          {/* <Card.Img variant="top" src={logo} alt="Logo" /> */}
         </ImageContainer>
 
         <Card.Body>

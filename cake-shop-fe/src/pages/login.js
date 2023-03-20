@@ -1,43 +1,26 @@
-import React, { useEffect, useState } from "react";
-import {
-  Grid,
-  Paper,
-  Avatar,
-  TextField,
-  Button,
-  Typography,
-  Link,
-} from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import Button from "@material-ui/core/Button";
+import logo from "../images/logo.jpg";
+import Input from "../components/Input";
 import axios from "axios";
-import { redirect } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import DrawerAppBar from "../Appbar";
 
-const Login = ({ handleChange }) => {
-  const paperStyle = {
-    padding: 20,
-    height: "73vh",
-    width: 300,
-    margin: "0 auto",
-  };
-  const navigate = useNavigate();
-  const avatarStyle = { backgroundColor: "#1bbd7e" };
-  const btnstyle = { margin: "8px 0" };
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const options = {
     headers: { "Content-Type": "application/json; charset=utf-8" },
   };
+
   useEffect(() => {
-    if (localStorage.getItem("isLogged")==="true") {
+    if (localStorage.getItem("isLogged") === "true") {
       navigate("/");
     }
   }, []);
 
-  const handleButtonClick = async () => {
+  const handleLogin = async () => {
     axios
       .post(
         "http://localhost:8081/login",
@@ -55,63 +38,77 @@ const Login = ({ handleChange }) => {
       .catch((error) => console.log(error));
   };
 
+  const signIn = (e) => {
+    //e.preventDefault();
+  };
   return (
-      <Grid>
-        <Paper style={paperStyle}>
-          <Grid align="center">
-            <Avatar style={avatarStyle}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <h2>Sign In</h2>
-          </Grid>
-          <TextField
-            label="Email"
-            placeholder="Enter your email"
-            fullWidth
-            required
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              console.log(email);
-            }}
-          />
-          <TextField
-            label="Password"
-            placeholder="Enter password"
-            type="password"
-            fullWidth
-            required
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              console.log(password);
-            }}
-          />
-          <FormControlLabel
-            control={<Checkbox name="checkedB" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            onClick={handleButtonClick}
-            type="submit"
-            color="primary"
-            variant="contained"
-            style={btnstyle}
-            fullWidth
-          >
-            Sign in
-          </Button>
+    <LoginContainer>
+      <LoginInnerContainer>
+        <img src={logo} alt=""></img>
+        <h1>Sign in to CakeShop</h1>
+        <p>cakeshop.com</p>
+        <Input
+          id="loginEmail"
+          type={"email"}
+          placeholder={"Email"}
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
 
-          <Typography>
-            {" "}
-            Do you not have an account ?
-            <Link href="#" onClick={() => handleChange("event", 1)}>
-              Register
-            </Link>
-          </Typography>
-        </Paper>
-      </Grid>
+        <Input
+          id="loginPassword"
+          type={"Password"}
+          placeholder={"Password"}
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+        <Button onClick={handleLogin}>Login</Button>
+        <div
+          style={{
+            display: "flex",
+            displayDirection: "row",
+            justifyContent: "space-between",
+            fontSize: "13px",
+          }}
+        >
+          <a href="/register">Don't have an account? Register</a>
+        </div>
+      </LoginInnerContainer>
+    </LoginContainer>
   );
-};
-
+}
 export default Login;
+
+const LoginContainer = styled.div`
+  background-color: #f8f8f8;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+`;
+
+const LoginInnerContainer = styled.div`
+  padding: 100px;
+  text-align: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+
+  > img {
+    object-fit: contain;
+    height: 100px;
+    margin-bottom: 40px;
+  }
+
+  > button {
+    margin-top: 25px;
+    text-transform: inherit !important;
+    background-color: #0a8d48 !important;
+    color: white;
+  }
+`;
