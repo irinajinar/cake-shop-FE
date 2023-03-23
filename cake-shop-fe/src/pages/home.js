@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Grid } from "@material-ui/core";
-import Card from "../Card";
 import { makeStyles } from "@material-ui/styles";
 import DrawerAppBar from "../Appbar";
-import ProductCard from "../components/ProductCard";
 import styled from "styled-components";
-import BasicExample from "../components/ProductCardV2";
+import ProductCard from "../components/ProductCard";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -21,16 +18,15 @@ function HomePage() {
   const classes = useStyles();
   const navigate = useNavigate();
   useEffect(() => {
-    if(localStorage.getItem('isLogged')==="true"){
+    if (localStorage.getItem("isLogged") === "true") {
       axios
-      .get("http://localhost:8081/products")
-      .then((response) => setProducts(response.data))
-      .catch((error) => console.log(error));
-    console.log(products);
-    }else{
+        .get("http://localhost:8081/products")
+        .then((response) => setProducts(response.data))
+        .catch((error) => console.log(error));
+      console.log(products);
+    } else {
       navigate("/login");
     }
-
   }, []);
 
   const options = {
@@ -39,13 +35,20 @@ function HomePage() {
 
   return (
     <div>
-     <DrawerAppBar />
+      <DrawerAppBar />
       <h1>Product List</h1>
-      {/* <Grid container spacing={4} className={classes.gridContainer}> */}
-        {/* <DrawerAppBar /> */}
-        <ResultsContainer>
-          {products.map((product)=><BasicExample></BasicExample>)}
-        </ResultsContainer>
+      <ResultsContainer>
+        {products.map((product) => (
+          <ProductCard
+            name={product.name}
+            price={product.price}
+            productType={product.productType}
+            productId={product.id}
+            userId={localStorage.getItem("userId")}
+            description="Delicious cakes!"
+          />
+        ))}
+      </ResultsContainer>
     </div>
   );
 }

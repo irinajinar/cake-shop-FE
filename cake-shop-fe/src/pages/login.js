@@ -33,6 +33,7 @@ function Login() {
       .then((response) => {
         console.log(response.data);
         localStorage.setItem("isLogged", true);
+        localStorage.setItem("userId", response.data.id);
         navigate("/");
       })
       .catch((error) => console.log(error));
